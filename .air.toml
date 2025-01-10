@@ -1,0 +1,9 @@
+[build]
+cmd = "go build -o ./tmp/api ./cmd/main.go"
+bin = "./tmp/api"
+include_dir = ["cmd", "internal", "pkg"]
+exclude_dir = ["assets", "tmp", "vendor"]
+
+[watch]
+include = ["**/*.go"]
+exclude = ["**/vendor/**"]
