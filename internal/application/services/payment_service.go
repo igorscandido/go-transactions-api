@@ -47,3 +47,11 @@ func (s *paymentService) GetPaymentStatusFromGateway(ctx context.Context, gatewa
 
 	return paymentStatus, nil
 }
+
+func (s *paymentService) FetchPayment(ctx context.Context, paymentId *string) (*domain.Payment, error) {
+	return s.repository.GetByID(ctx, *paymentId)
+}
+
+func (s *paymentService) SavePayment(ctx context.Context, payment *domain.Payment) error {
+	return s.repository.Create(ctx, payment)
+}
