@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 database:
   user: postgres
   password: postgres
@@ -10,3 +13,12 @@ redis:
   address: redis
   port: 6379
   password: redis
+
+currency:
+  baseCurrency: USD
+  cacheRates: true
+  cacheTTLSeconds: 60
+
+externalKeys:
+  stripe: sk_test_51QhszN2Mrc6HX29BAN2gN3KQxqhcLJG2qVlmJ5RAv6FHb4XgqDXgdALugNG8MTn3r8IYLa3IuhgxiHmO4IRND8IE00Ilg1l4gO
+  openExchangeRates: 7eb73900ba7c488f8977316618c7c5b7

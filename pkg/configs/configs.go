@@ -7,7 +7,32 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-type database struct {
+var (
+	AppTransactionsBaseCurrency string
+)
+
+type Server struct {
+	Port int `yaml:"port"`
+}
+
+type ExternalKeys struct {
+	OpenExchangeRates string `yaml:"openExchangeRates"`
+	Stripe            string `yaml:"stripe"`
+}
+
+type Currency struct {
+	BaseCurrency    string `yaml:"baseCurrency"`
+	CacheRates      bool   `yaml:"cacheRates"`
+	CacheTTLSeconds int    `yaml:"cacheTTLSeconds"`
+}
+
+type Redis struct {
+	Addr     string `yaml:"address"`
+	Password string `yaml:"password"`
+	Port     int    `yaml:"port"`
+}
+
+type Database struct {
 	User     string `yaml:"user"`
 	Password string `yaml:"password"`
 	Host     string `yaml:"host"`
@@ -17,7 +42,11 @@ type database struct {
 }
 
 type Configs struct {
-	Database database `yaml:"database"`
+	Database     Database     `yaml:"database"`
+	Redis        Redis        `yaml:"redis"`
+	Currency     Currency     `yaml:"currency"`
+	ExternalKeys ExternalKeys `yaml:"externalKeys"`
+	Server       Server       `yaml:"server"`
 }
 
 func NewConfigs() *Configs {
@@ -32,6 +61,7 @@ func NewConfigs() *Configs {
 	if err := decoder.Decode(&cfg); err != nil {
 		log.Fatalf("Failed to decode YAML file: %v", err)
 	}
+	AppTransactionsBaseCurrency = cfg.Currency.BaseCurrency
 
 	return &cfg
 }
